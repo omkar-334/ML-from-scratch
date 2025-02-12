@@ -12,12 +12,13 @@ def mse(y_pred, y_true):
 
 
 class LinearRegression:
-    def __init__(self, lr=0.001, num_iterations=1000):
+    def __init__(self, num_iterations=1000, lr=None, lr_scheduler=None):
         self.lr = lr
         self.num_iterations = num_iterations
         self.theta = None
         self.bias = None
         self.tolerance = 1e-5
+        self.lr_scheduler = lr_scheduler
 
     def fit(self, X, y):
         n_samples, n_features = X.shape
@@ -26,12 +27,15 @@ class LinearRegression:
 
         prev_loss = 0
 
-        for _ in range(self.num_iterations):
+        for epoch in range(self.num_iterations):
             y_pred = np.dot(X, self.theta) + self.bias
             error = y_pred - y
 
             dw = (1 / n_samples) * (np.dot(X.T, (error)))
             db = (1 / n_samples) * (np.sum(error))
+
+            if self.lr_scheduler:
+                self.lr = self.lr_scheduler.get_lr(epoch, total_epochs=self.num_iterations)
 
             self.theta -= self.lr * dw
             self.bias -= self.lr * db
