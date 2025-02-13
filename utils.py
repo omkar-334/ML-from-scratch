@@ -1,6 +1,7 @@
 import os
 
 import kaggle
+import numpy as np
 from sklearn.metrics import accuracy_score, classification_report
 
 
@@ -17,3 +18,7 @@ def download_kaggle_dataset(dataset_name):
 
     kaggle.api.dataset_download_files(dataset_name, path=download_path, unzip=True)
     return [os.path.join(download_path, file) for file in os.listdir(download_path)]
+
+
+def mse(y_pred, y_true):
+    return np.mean(np.square(y_pred - y_true))

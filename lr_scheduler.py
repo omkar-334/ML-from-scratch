@@ -1,6 +1,10 @@
 import math
 from typing import Literal
 
+# Sources
+# https://numpy-ml.readthedocs.io/en/latest/numpy_ml.neural_nets.schedulers.html
+# https://medium.com/@theom/a-very-short-visual-introduction-to-learning-rate-schedulers-with-code-189eddffdb00
+
 
 class LearningRateScheduler:
     def __init__(
